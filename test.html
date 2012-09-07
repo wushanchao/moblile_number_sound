@@ -1,0 +1,110 @@
+<html>
+<head>
+<title></title>
+<script type="text/javascript" src="jquery-1.4.2.js"></script>
+<script type="text/javascript" src="audio-player.js"></script> 
+<script type="text/javascript">
+    AudioPlayer.setup("player.swf", {
+        width: 300,
+        initialvolume: 100,
+        transparentpagebg: "no",
+        left: "FFFFFF",
+        lefticon: "FFFFFF",
+        bg: "FFFFFF",
+        voltrack:"FFFFFF",
+        volslider:"FFFFFF",
+        rightbg:"FFFFFF",
+        rightbghover:"FFFFFF",
+        righticon:"FFFFFF",
+        righticonhover:"FFFFFF",
+        tracker:"FFFFFF",
+        border:"FFFFFF",
+        skip:"FFFFFF",
+        text:"FFFFFF",
+        loader: "FFFFFF",
+        leftbg:"FFFFFF",
+        track: "FFFFFF"
+        
+    });   
+</script> 
+<script type="text/javascript">
+
+    function checkTelephone(obj) {
+        var reg = /^[1][358]\d{9}$/; //验证手机号码
+        var phone = document.getElementById('phonenumber').value;
+        if (!reg.test(phone)) {
+            //alert("电话号码格式错误!");
+            var mymap = document.getElementById('error');
+            with (mymap.style) {
+                display = '';
+            }
+            //obj.value = "";
+            //obj.focus();
+            document.getElementById("readNum").disabled = true;
+            return false;
+        }
+        else {
+            var mymap = document.getElementById('error');
+            with (mymap.style) {
+                display = 'none';
+            }
+            document.getElementById("readNum").disabled = ''; 
+            
+        } 
+    }
+
+
+    $(function() {
+        $("#PlayPWD").click(function() {
+            var password = $("#pwd").val();
+            var singlePWD = "";
+            for (var i = 0; i < password.length; i++) {
+                singlePWD += password.charAt(i) + ".mp3,";
+            }
+            singlePWD = singlePWD.substring(0, singlePWD.length - 1);
+            AudioPlayer.embed("audioplayer_1", {
+                soundFile: "password.mp3," + singlePWD,
+                autostart: "yes"
+            });
+
+
+
+        });
+
+        $("#readNum").click(function() {
+            var password = $("#phonenumber").val();
+            var singlePWD = "";
+            for (var i = 0; i < password.length; i++) {
+                singlePWD += password.charAt(i) + ".mp3,";
+            }
+            singlePWD = singlePWD.substring(0, singlePWD.length - 1);
+
+
+            AudioPlayer.embed("audioplayer_1", {
+                soundFile: "phonenum.mp3," + singlePWD,
+                autostart: "yes",
+                noinfo: "yes",
+                animation: "no"
+            });
+            
+
+
+        });
+
+    })
+ 
+</script>
+
+ 
+
+</head>
+<body>
+<input type="password" id="pwd" /><input type="button" id="PlayPWD" value="读出密码" />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+ <input type="text" id="phonenumber" onkeyup="checkTelephone(this)" />   <input id="readNum" type="button" disabled="disabled" value="读出手机号码" /><span id="error" style=" display:none; color:Red;" >手机格式错误！</span>
+<br />
+<p id="audioplayer_1" style=" display:none">Alternative content</p>
+
+</body>
+
+
+</html>
